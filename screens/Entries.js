@@ -1,39 +1,69 @@
-import { FlatList, View, StyleSheet, Text, Pressable } from "react-native";
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import { Wrapper } from "../components/Wrapper";
 import { useEffect, useState } from "react";
 import { getEntries } from "../api";
 import { Ionicons } from "@expo/vector-icons";
+import { EntryModal } from "../components/EntryModal";
+import { Entry } from "../components/Entry";
 
 export function Entries() {
   const [entries, setEntries] = useState([]);
+  const [entryModalVisible, setEntryModalVisible] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
+    (async () => {
       const data = await getEntries();
-      console.log(data);
-      setEntries(data);
-    }
-
-    fetchData();
+      setEntries(Object.values(data));
+    })();
   }, []);
 
+  async function onConfirm() {
+    const data = await getEntries();
+      setEntries(Object.values(data));
+  }
+
   return (
-    <Wrapper>
-      <View style={styles.titleView}>
-        <Text style={styles.title}>My entries</Text>
-        <Pressable style={styles.icon}>
-          <Ionicons name="add" size={24} color="white" />
-        </Pressable>
-      </View>
-      <View>
-        <FlatList
-          data={entries}
-          renderItem={({ item }) => {
-            return <Text>{item.description}</Text>;
-          }}
-        />
-      </View>
-    </Wrapper>
+    <View style={styles.view}>
+      <EntryModal
+        visible={entryModalVisible}
+        hide={() => {
+          onConfirm()
+          setEntryModalVisible(false);
+        }}
+      />
+      <Wrapper>
+        <View style={styles.titleView}>
+          <Text style={styles.title}>My entries</Text>
+          <Pressable
+            style={styles.icon}
+            onPress={() => {
+              setEntryModalVisible(true);
+            }}
+          >
+            <Ionicons name="add" size={24} color="white" />
+          </Pressable>
+        </View>
+        <ScrollView>
+          {entries.map((entry) => {
+            return (
+              <Entry
+                key={entry.video}
+                createdAt={entry.createdAt}
+                description={entry.description}
+                video={entry.video}
+              />
+            );
+          })}
+        </ScrollView>
+      </Wrapper>
+    </View>
   );
 }
 
@@ -51,5 +81,8 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     padding: 8,
     borderRadius: 8,
+  },
+  view: {
+    flexGrow: 1,
   },
 });

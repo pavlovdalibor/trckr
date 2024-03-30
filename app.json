@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -27,7 +25,21 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow trckr to access your camera?"
+        }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow trckr to access your gallery?",
+          "savePhotosPermission": "Allow trckr to save videos to gallery?",
+          "isAccessMediaLocationEnabled": true
+        }
+      ]
     ]
   }
 }

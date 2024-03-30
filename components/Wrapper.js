@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from "react-native";
 import { getItem } from "expo-secure-store";
 
-export function Wrapper({ children }) {
+export function Wrapper({ children, style = {} }) {
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, style]}>
       <Text style={styles.uid}>{getItem("uuid")}</Text>
       {children}
     </View>
@@ -12,8 +12,10 @@ export function Wrapper({ children }) {
 
 const styles = StyleSheet.create({
   wrapper: {
+    backgroundColor: "white",
+    flexGrow: 1,
     padding: 20,
-    paddingTop: 30,
+    gap: 10,
   },
   uid: {
     color: "gray",

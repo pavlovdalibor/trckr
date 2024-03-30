@@ -29,9 +29,12 @@ export function CameraRequest() {
           padding: 10,
           backgroundColor: "black",
           borderRadius: 8,
+          flexDirection: "row",
+          gap: 10,
         }}
       >
-        <Text style={{ color: "white" }}>Please grant camera permissions.</Text>
+        <Text style={{ color: "white" }}>Grant camera permissions</Text>
+        <Ionicons name="arrow-forward-circle" size={20} color="white" />
       </Pressable>
     </View>
   );

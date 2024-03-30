@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Camera } from "expo-camera";
 import { CameraRequest } from "./screens/CameraRequest";
 import { Loading } from "./screens/Loading";
+import { EntryModal } from "./components/EntryModal";
 
 const Tab = createBottomTabNavigator();
 

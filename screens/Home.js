@@ -12,7 +12,7 @@ export function Home() {
 const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
-    fontSize: 24,
+    fontSize: 28,
   },
   uid: {
     color: "gray",
