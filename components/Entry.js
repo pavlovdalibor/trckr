@@ -1,33 +1,45 @@
 import { StyleSheet, Text, View } from "react-native";
 import { Button } from "./Button";
-import { Ionicons } from "@expo/vector-icons";
-import { VideoInput } from "./Input";
+import { useState } from "react";
+import { DetailsModal } from "./DetailsModal";
 
-export function Entry({ description, video, createdAt }) {
-  const date = new Date(createdAt);
-  const filteredDate = `Saved on ${date.getUTCMonth()}-${date.getUTCDay()}-${date.getUTCFullYear()}.`;
+export function Entry({ entry, update }) {
+    const { description, createdAt } = entry;
+    const date = new Date(createdAt);
+    const filteredDate = `Saved on ${date.getUTCMonth()}-${date.getUTCDay()}-${date.getUTCFullYear()}.`;
+    const [modalVisible, setModalVisible] = useState(false);
 
-  console.log(video);
-
-  return (
-    <View style={styles.entry}>
-      <Text style={styles.date}>{filteredDate}</Text>
-      <Text style={styles.desc}>{description}</Text>
-      <Button>See details</Button>
-    </View>
-  );
+    return (
+        <View style={styles.entry}>
+            <DetailsModal
+                visible={modalVisible}
+                entry={entry}
+                hide={() => setModalVisible(false)}
+                update={update}
+            />
+            <Text style={styles.date}>{filteredDate}</Text>
+            <Text style={styles.desc}>{description}</Text>
+            <Button
+                onPress={() => {
+                    setModalVisible(true);
+                }}
+            >
+                See details
+            </Button>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
-  entry: {
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "lightgray",
-    gap: 5,
-    marginBottom: 10,
-  },
-  date: {
-    color: "gray",
-  },
+    entry: {
+        padding: 10,
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: "lightgray",
+        gap: 5,
+        marginBottom: 10,
+    },
+    date: {
+        color: "gray",
+    },
 });
